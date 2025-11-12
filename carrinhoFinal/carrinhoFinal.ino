@@ -16,6 +16,8 @@
 #define sensorE A0 // Pino do sensor IV esquerdo
 #define sensorD A1 // Pino do sensor IV direito
 
+int POT = 70; // Velocidade dos motores (padrões por enquanto)
+
 void setup() 
 {
   // Definindo os motores e outros componentes como saídas
@@ -39,8 +41,6 @@ void setup()
   pinMode(ECHO_PIN, INPUT);
 
   delay(5000); // Aguarda 5 segundos antes de iniciar                   
-
-int POT = 70; // Velocidade dos motores (padrões por enquanto)
 
 }
 
@@ -72,9 +72,12 @@ void modoSeguidorLinha() // sensores IV
   if (digitalRead(sensorE) == LOW && digitalRead(sensorD) == LOW)
   { // não detectou nenhuma linha preta
     robo_frente();
+  }
+}
 
-///////////////////////////////////////////////////////////////////////
-void robo_frente() // direções 
+///////////////////////////////////////////////
+
+    void robo_frente() // direções 
 {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
@@ -123,11 +126,13 @@ void robo_parado() //Direções
 }
 /////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////
+
 void distancia_cm()
 {
 float dist_cm = distancia(); // Declara variável que armazena a distância do obstáculo  
 
-  if (dist_cm <= 20) // Se a distância for menor que 20 cm
+  if (dist_cm <= 20) //  Se a distância for menor que 20 cm
   {
     // Acende o LED vermelho
   led_stop();
@@ -140,7 +145,6 @@ float dist_cm = distancia(); // Declara variável que armazena a distância do o
   led_on();
   robo_frente();
   }                         
-  }
 }
 
 /////////////////////////////////////////////////////////
