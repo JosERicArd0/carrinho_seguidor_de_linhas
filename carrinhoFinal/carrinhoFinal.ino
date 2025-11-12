@@ -27,8 +27,8 @@ void setup()
   pinMode(ENB, OUTPUT); // Controle velocidade motor B 
 
   //  Definindo os sensores IV
-  pinmode(sensorE, INPUT);
-  pinmode(sensorD, INPUT);
+  pinMode(sensorE, INPUT);
+  pinMode(sensorD, INPUT);
 
   // Definindo os LEDs como saídas
   pinMode(LED_VERDE, OUTPUT); // LED verde
@@ -39,36 +39,37 @@ void setup()
   pinMode(ECHO_PIN, INPUT);
 
   delay(5000); // Aguarda 5 segundos antes de iniciar                   
+
+int POT = 70; // Velocidade dos motores (padrões por enquanto)
+
 }
 
 void loop() 
 {
-
-POT = 70; // Velocidade dos motores (padrões por enquanto)
-
-modoseguidordelinha(); // def. do sensor IV
+modoSeguidorLinha(); // def. do sensor IV
 
 distancia_cm(); // def. do ultrassônico
+}
 
 ///////////////////////////////////////////////////////////////////
 void modoSeguidorLinha() // sensores IV
 {
-  if (digitalRead(SensorE) == HIGH && digitalRead(SensorD) == HIGH)
+  if (digitalRead(sensorE) == HIGH && digitalRead(sensorD) == HIGH)
   { // detectou a linha preta nos dois sensores
     robo_parado();
   }
   
-  if (digitalRead(SensorE) == HIGH && digitalRead(SensorD) == LOW)
+  if (digitalRead(sensorE) == HIGH && digitalRead(sensorD) == LOW)
   { // detectou a linha preta na esquerda
     robo_direita();
   }
 
-  if (digitalRead(SensorE) == LOW && digitalRead(SensorD) == HIGH)
+  if (digitalRead(sensorE) == LOW && digitalRead(sensorD) == HIGH)
   { // detectou a linha preta na direita
     robo_esquerda();
   }
 
-  if (digitalRead(SensorE) == LOW && digitalRead(SensorD) == LOW)
+  if (digitalRead(sensorE) == LOW && digitalRead(sensorD) == LOW)
   { // não detectou nenhuma linha preta
     robo_frente();
 
@@ -133,7 +134,7 @@ float dist_cm = distancia(); // Declara variável que armazena a distância do o
   robo_parado(); 
   } 
   
-  if  (dist_cm <= 20)
+  if  (dist_cm >= 20)
   {
     // acende o LED verde
   led_on();
@@ -166,12 +167,12 @@ float distancia()
 
 void led_on()
 {
-  digitalWrite(LED_VERMELHO, LOW)
-  digitalWrite(LED_VERDE, HIGH)
+  digitalWrite(LED_VERMELHO, LOW);
+  digitalWrite(LED_VERDE, HIGH);
 }
 
 void led_stop()
   {
-    digitalWrite(LED_VERMELHO, HIGH)
-    digitalWrite(LED_VERDE, LOW)
+    digitalWrite(LED_VERMELHO, HIGH);
+    digitalWrite(LED_VERDE, LOW);
   }
